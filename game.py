@@ -39,7 +39,6 @@ class Game:
             return False
 
         self.last_move_points = self.board.score - old_score
-
         self.history.append((old_grid, old_score))
         self.board.add_random_tile()
         return True
@@ -51,6 +50,7 @@ class Game:
         grid, score = self.history.pop()
         self.board.grid = grid
         self.board.score = score
+        self.last_move_points = 0
         return True
 
     def run(self):
@@ -80,7 +80,7 @@ class Game:
                     print("Nothing to undo.")
                 continue
 
-            if key not in "wasd":
+            if key not in ("w", "a", "s", "d"):
                 print("Use W/A/S/D, U, or Q.")
                 continue
 
@@ -90,7 +90,9 @@ class Game:
                 )
 
                 if self.last_move_points > 0:
-                    print(f"Tiles merged! +{self.last_move_points} points.")
+                    print(
+                        f"Tiles merged! +{self.last_move_points} points."
+                    )
                 else:
                     print("Move successful.")
             else:
